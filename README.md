@@ -3,6 +3,7 @@
 **Rossmann Store Sales Prediction with XGBoost**
 
 📌 **Deskripsi Proyek**
+
 Proyek ini bertujuan untuk memprediksi volume penjualan harian di lebih dari 1.100 toko Rossmann di Jerman. Prediksi yang akurat membantu manajer toko dalam merencanakan inventaris, logistik, dan manajemen staf secara lebih efisien. Dataset yang digunakan mencakup informasi toko, promosi, hari libur, dan kompetisi lokal.
 
 🛠️ **Tech Stack**
