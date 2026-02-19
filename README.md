@@ -8,14 +8,14 @@ Proyek ini bertujuan untuk memprediksi volume penjualan harian di lebih dari 1.1
 
 🛠️ **Tech Stack**
 - Bahasa Pemrograman: Python
-- Library Utama: * Pandas & NumPy untuk manipulasi data.
+- Library Utama: Pandas & NumPy untuk manipulasi data.
     - Scikit-Learn untuk pra-pemrosesan (Scaling & Encoding).
     - XGBoost sebagai model prediktif utama.
     - Matplotlib untuk visualisasi hasil.
 
 🚀 **Alur Kerja Data Science**
 - Integrasi Data: Menggabungkan dataset toko (store.csv) dengan data transaksi harian (train.csv) untuk mendapatkan konteks yang lengkap.
-- Feature Engineering: * Ekstraksi informasi waktu (Tahun, Bulan, Hari, Minggu ke-n) dari data tanggal.
+- Feature Engineering: Ekstraksi informasi waktu (Tahun, Bulan, Hari, Minggu ke-n) dari data tanggal.
     - Menghitung durasi kompetitor telah buka di sekitar toko.
     - Menghitung durasi promo aktif (Promo2).
 - Pra-pemrosesan:
