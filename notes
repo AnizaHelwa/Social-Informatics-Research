@@ -1,0 +1,56 @@
+# **Catatan Proyek: Rossmann Store Sales Prediction**
+**Metode: Gradient Boosting (XGBoost)**
+
+## **I. Tahap Persiapan & Preprocessing**
+Langkah awal untuk memastikan data siap masuk ke dalam model machine learning.
+
+1. Exploratory Data Analysis (EDA) & Data Loading:
+   * Membaca data train.csv, store.csv, dan test.csv.
+   * Menggabungkan (Merging) dataset ross_df dengan store_df agar model memiliki informasi lengkap tentang karakteristik toko (seperti tipe toko, jarak kompetitor, dll).
+
+2. Feature Engineering (Tanggal):
+   * Mengonversi kolom Date menjadi objek datetime.
+   * Mengekstrak informasi waktu menjadi fitur baru: Year, Month, Day, dan WeekOfYear. Ini penting karena penjualan retail sangat dipengaruhi oleh siklus waktu (musiman).
+
+3. Handling Missing Values:
+   * Mengisi nilai kosong pada fitur numerik (seperti CompetitionDistance) dengan nilai rata-rata atau median
+   * Mengisi fitur kategori yang kosong dengan label "Unknown" atau "0".
+
+4. Encoding Categorical Data:
+   * Menggunakan OneHotEncoder untuk mengubah data teks/kategori (seperti StoreType, Assortment) menjadi angka koordinat (0 dan 1) agar bisa diproses secara matematis oleh XGBoost.
+
+## **II. Membangun Model XGBoost**
+XGBoost dipilih karena kemampuannya menangani data tabular dengan sangat cepat dan akurat.
+
+1. Definisi Hyperparameter Utama:
+   * n_estimators: Jumlah pohon keputusan yang dibuat. Kamu menemukan bahwa angka 240 memberikan hasil lebih baik daripada 100.
+   * max_depth: Membatasi kedalaman pohon (kamu menggunakan 4) untuk mencegah model terlalu detail menghafal data (overfitting).
+   * learning_rate: Mengontrol seberapa besar koreksi yang dilakukan setiap pohon baru terhadap kesalahan pohon sebelumnya.
+   * booster: Mesin penggeraknya. Kamu menggunakan gbtree (berbasis pohon).
+
+2. Metrik Evaluasi (RMSE):
+   * Kamu menggunakan Root Mean Squared Error (RMSE) untuk mengukur seberapa jauh prediksi model dari nilai aslinya. Semakin kecil RMSE, semakin akurat modelnya.
+
+## **III. Teknik Validasi: K-Fold Cross Validation**
+Langkah ini krusial untuk memastikan model tidak hanya jago di data latihan saja.
+
+1. K-Fold Split: Membagi data menjadi beberapa bagian (misal 5 bagian).
+
+2. Iterasi & Pelatihan: Model dilatih 5 kali. Setiap kali, satu bagian dijadikan bahan ujian (validasi) dan sisanya bahan latihan.
+
+3. Model Ensemble: Kamu menyimpan semua model dari setiap fold ke dalam list models. Saat prediksi akhir, hasil dari semua model ini dirata-ratakan agar lebih stabil.
+
+## **IV. Visualisasi "Isi Otak" Model**
+Kamu melakukan dua hal penting untuk memahami cara kerja model:
+
+1. Plot Tree (Graphviz):
+   * Menampilkan struktur satu pohon tertentu (misal num_trees=0).
+   * Membantu melihat fitur apa yang menjadi penentu utama di tingkat paling atas (seperti Open atau Promo).
+
+2. Feature Importance:
+   * Melihat rangkuman fitur mana yang paling sering digunakan oleh seluruh pohon untuk mengambil keputusan.
+
+## **V. Prediksi Akhir & Export**
+1. Prediksi Data Test: Menjalankan data test.csv ke dalam model yang sudah dilatih.
+
+2. Submission: Menyimpan hasil prediksi kolom Sales bersama dengan Id ke dalam file CSV untuk dikirim ke Kaggle.
